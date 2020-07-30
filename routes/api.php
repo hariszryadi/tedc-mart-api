@@ -46,4 +46,9 @@ Route::prefix('v1')->group(function() {
     Route::get('provinces', 'ShopController@provinces');
     Route::get('cities', 'ShopController@cities');
     Route::get('couriers', 'ShopController@couriers');
+
+    // user
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::post('update-profile', 'UserController@update');
+    });
 });
