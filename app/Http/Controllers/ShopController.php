@@ -376,4 +376,32 @@ class ShopController extends Controller
             'data' => $data
         ], 200);
     }
+
+    public function detailOrder($orderId)
+    {
+        $user = Auth::user();
+        $status = "error";
+        $message = "";
+        $data = [];
+        if ($user) {
+            $detailOrder = ProductOrder::where('order_id', '=', $orderId)
+                            ->join('products', 'products.id', '=', 'product_order.product_id')
+                            ->join('orders', 'orders.id', '=', 'product_order.order_id')
+                            ->where('orders.user_id', '=', $user->id)
+                            ->get();
+            if ($detailOrder) {
+                $status = "success";
+                $message = "detail order";
+                $data = $detailOrder;
+            }
+        } else {
+            $message = "User not found";
+        }
+
+        return response()->json([
+            'status' => $status,
+            'message' => $message,
+            'data' => $data
+        ], 200);
+    }
 }

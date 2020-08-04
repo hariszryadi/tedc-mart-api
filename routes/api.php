@@ -42,6 +42,7 @@ Route::prefix('v1')->group(function() {
         Route::post('services', 'ShopController@services');
         Route::post('payment', 'ShopController@payment');
         Route::get('my-order', 'ShopController@myOrder');
+        Route::get('detail-order/{orderId}', 'ShopController@detailOrder');
     });
     Route::get('provinces', 'ShopController@provinces');
     Route::get('cities', 'ShopController@cities');
